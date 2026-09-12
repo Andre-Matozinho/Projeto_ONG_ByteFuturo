@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteFuturo — Democratizando o Acesso à Tecnologia</title>
+    <meta name="description" content="ONG que leva educação em tecnologia, programação, IA, inglês e educação financeira para jovens de baixa renda e idosos em inclusão digital.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="container">
+        <a href="#/" class="logo">ByteFuturo</a>
+        <button
+            type="button"
+            class="menu-toggle"
+            id="menu-toggle"
+            aria-expanded="false"
+            aria-controls="menu-principal"
+            aria-label="Abrir menu de navegação">
+            <span class="hamburger-icon" aria-hidden="true"></span>
+        </button>
+        <nav>
+            <ul id="menu-principal">
+                <li><a href="#/" data-rota="">Início</a></li>
+                <li class="has-dropdown">
+                    <a href="#/projetos" data-rota="projetos">Projetos</a>
+                    <ul class="dropdown">
+                        <li><a href="#/projetos/iniciativas">Iniciativas</a></li>
+                        <li><a href="#/projetos/doacao">Como Doar</a></li>
+                        <li><a href="#/projetos/voluntariado">Seja Voluntário</a></li>
+                    </ul>
+                </li>
+                <li><a href="#/cadastro" data-rota="cadastro">Cadastre-se</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- A SPA injeta aqui o conteúdo de cada rota (ver js/router.js). -->
+    <main id="app"></main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <span class="toast__icon" aria-hidden="true">&check;</span>
+        <span>Cadastro enviado com sucesso! Em breve entraremos em contato.</span>
+    </div>
+
+    <footer class="container">
+        <p>&copy; 2026 ByteFuturo — Democratizando o Acesso à Tecnologia.</p>
+        <nav>
+            <ul>
+                <li><a href="#/" data-rota="">Início</a></li>
+                <li><a href="#/projetos" data-rota="projetos">Projetos</a></li>
+                <li><a href="#/cadastro" data-rota="cadastro">Cadastre-se</a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="../js/router.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/mascaras.js"></script>
+    <script src="../js/feedback.js"></script>
+</body>
+</html>
