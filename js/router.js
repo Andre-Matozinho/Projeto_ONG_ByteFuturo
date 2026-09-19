@@ -1,33 +1,23 @@
 // router.js
-// Roteador mínimo, em JavaScript puro, para a SPA da ByteFuturo.
-//
-// Por que hash routing (#/rota) em vez da History API (pushState):
-// o projeto é hospedado como arquivos estáticos (ex.: GitHub Pages), sem
-// nenhum servidor configurado para redirecionar todas as rotas de volta
-// para o index.html. Com pushState, recarregar a página em "/projetos"
-// resultaria em 404, porque o servidor tentaria abrir um arquivo que não
-// existe. Com hash routing, tudo depois do "#" nunca é enviado ao
-// servidor, então um recarregamento em "#/projetos" sempre abre o mesmo
-// index.html e deixa o próprio JavaScript decidir o que renderizar.
+// Roteador em JavaScript puro para a SPA da ByteFuturo.
 
 const CONTAINER_ID = 'app';
 
-// Mapa de rota -> template HTML a ser buscado e injetado no container.
 const ROTAS = {
     '': '../html/templates/inicio.html',
     'projetos': '../html/templates/projetos.html',
     'cadastro': '../html/templates/cadastro.html',
 };
 
-/**
- * Lê o hash atual da URL e separa a rota principal de uma âncora
- * secundária, por exemplo "#/projetos/doacao" vira { rota: "projetos",
- * ancora: "doacao" }. Isso permite que o dropdown de navegação aponte
- * para uma seção específica de "Projetos" mesmo com o conteúdo sendo
- * carregado de forma dinâmica.
- */
+const TITULOS = {
+    '': 'ByteFuturo — Democratizando o Acesso à Tecnologia',
+    'projetos': 'Projetos — ByteFuturo',
+    'cadastro': 'Cadastre-se — ByteFuturo',
+};
+
 function interpretarHash() {
     const partes = window.location.hash.replace(/^#\/?/, '').split('/');
+
     return {
         rota: partes[0] || '',
         ancora: partes[1] || null,
@@ -36,17 +26,50 @@ function interpretarHash() {
 
 function atualizarLinkAtivo(rota) {
     document.querySelectorAll('[data-rota]').forEach(function (link) {
-        link.classList.toggle('link-ativo', link.dataset.rota === rota);
+        const ativo = link.dataset.rota === rota;
+
+        link.classList.toggle('link-ativo', ativo);
+
+        if (ativo) {
+            link.setAttribute('aria-current', 'page');
+        } else {
+            link.removeAttribute('aria-current');
+        }
     });
 }
 
-/**
- * Função central da SPA: limpa o conteúdo atual do container #app e
- * injeta o fragmento HTML correspondente à rota, via fetch + innerHTML.
- */
+function atualizarTitulo(rota) {
+    document.title = TITULOS[rota] || TITULOS[''];
+}
+
+function moverFocoParaConteudo(container, ancora) {
+    if (ancora) {
+        const alvo = document.getElementById(ancora);
+
+        if (alvo) {
+            alvo.setAttribute('tabindex', '-1');
+            alvo.focus({ preventScroll: true });
+            alvo.scrollIntoView({ behavior: 'smooth' });
+            return;
+        }
+    }
+
+    const tituloPrincipal = container.querySelector('h1');
+
+    if (tituloPrincipal) {
+        tituloPrincipal.setAttribute('tabindex', '-1');
+        tituloPrincipal.focus({ preventScroll: true });
+    } else {
+        container.focus({ preventScroll: true });
+    }
+
+    window.scrollTo(0, 0);
+}
+
 async function renderizarRota() {
     const { rota, ancora } = interpretarHash();
-    const caminho = ROTAS[rota] !== undefined ? ROTAS[rota] : ROTAS[''];
+    const rotaValida = ROTAS[rota] !== undefined ? rota : '';
+    const caminho = ROTAS[rotaValida];
     const container = document.getElementById(CONTAINER_ID);
 
     if (!container) {
@@ -61,27 +84,29 @@ async function renderizarRota() {
         }
 
         const html = await resposta.text();
-        container.innerHTML = html; // limpa o fragmento anterior e injeta o novo
+        container.innerHTML = html;
+
+        atualizarTitulo(rotaValida);
+        atualizarLinkAtivo(rotaValida);
+        moverFocoParaConteudo(container, ancora);
+
     } catch (erro) {
-        container.innerHTML = '<section class="container"><p>Não foi possível carregar esta página. Tente novamente em instantes.</p></section>';
-        console.error('[router] ', erro);
+        container.innerHTML = `
+            <section class="container" role="alert">
+                <h1>Não foi possível carregar esta página</h1>
+                <p>Tente novamente em instantes.</p>
+            </section>
+        `;
+
+        container.focus();
+        console.error('[router]', erro);
     }
 
-    if (ancora) {
-        const alvo = document.getElementById(ancora);
-        if (alvo) {
-            alvo.scrollIntoView({ behavior: 'smooth' });
-        }
-    } else {
-        window.scrollTo(0, 0);
-    }
-
-    atualizarLinkAtivo(rota);
-
-    // Avisa os demais módulos (máscaras de input, feedback do formulário
-    // etc.) que um novo fragmento acabou de ser inserido no DOM, para que
-    // eles possam religar seus event listeners nos elementos recém-criados.
-    document.dispatchEvent(new CustomEvent('rota:renderizada', { detail: { rota: rota } }));
+    document.dispatchEvent(
+        new CustomEvent('rota:renderizada', {
+            detail: { rota: rotaValida }
+        })
+    );
 }
 
 window.addEventListener('hashchange', renderizarRota);
