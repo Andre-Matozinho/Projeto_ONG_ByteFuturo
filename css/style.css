@@ -7,65 +7,62 @@
 :root {
 
   /* ---- Cores — Primária (azul, marca) ---- */
-  --color-primary: #0B1E3F;        /* azul-escuro principal: header, footer, textos de destaque */
-  --color-primary-light: #1B3A6B;  /* azul mais claro: seções alternadas, estados de hover em fundo escuro */
+  --color-primary: #0B1E3F;
+  --color-primary-light: #1B3A6B;
 
   /* ---- Cores — Secundária (ciano, apoio visual) ---- */
-  --color-secondary: #4FD1C5;       /* ciano principal: ícones, ilustrações, detalhes decorativos */
-  --color-secondary-dark: #2CA89C;  /* ciano mais escuro: bordas e hover sobre elementos claros */
+  --color-secondary: #4FD1C5;
+  --color-secondary-dark: #1C746C;
 
   /* ---- Cores — Accent (laranja, chamadas para ação) ---- */
-  --color-accent: #F2994A;       /* fundo dos botões de CTA: "Quero Participar", "Quero Doar" */
-  --color-accent-dark: #C2610A;  /* hover/estado ativo dos botões de CTA */
+  --color-accent: #F2994A;
+  --color-accent-dark: #A64B00;
 
   /* ---- Cores — Neutras ---- */
   --color-white: #FFFFFF;
-  --color-gray-100: #F5F7FA;  /* fundo alternado de seções */
-  --color-gray-300: #D0D5DD;  /* bordas, divisores, inputs */
-  --color-gray-700: #344054;  /* texto de corpo (cinza-escuro, mais suave que preto puro) */
+  --color-gray-100: #F5F7FA;
+  --color-gray-300: #D0D5DD;
+  --color-gray-700: #344054;
 
-  /* ---- Cores — Semânticas (feedback de formulário) ----
-     Propositalmente fora da família azul/ciano/laranja, para não se
-     confundir com marca ou CTA: verde e vermelho são a convenção que
-     o usuário já reconhece para sucesso e erro. */
+  /* ---- Cores — Semânticas (feedback de formulário) ---- */
   --color-success: #2E7D32;
   --color-success-bg: #EAF6EC;
   --color-error: #C0152B;
   --color-error-bg: #FDEDEE;
 
-  /* ---- Tipografia — família e escala modular (base 16px, 5 níveis) ---- */
+  /* ---- Tipografia ---- */
   --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  --font-size-sm: 0.875rem;   /* 14px — legendas, rodapé, textos auxiliares */
-  --font-size-base: 1rem;     /* 16px — corpo de texto, parágrafos */
-  --font-size-md: 1.25rem;    /* 20px — h3, subtítulos de cartões */
-  --font-size-lg: 1.75rem;    /* 28px — h2, títulos de seção */
-  --font-size-xl: 2.5rem;     /* 40px — h1, título principal do hero */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.25rem;
+  --font-size-lg: 1.75rem;
+  --font-size-xl: 2.5rem;
 
-  --line-height-base: 1.5;     /* leitura confortável de parágrafos (WCAG 1.4.8) */
-  --line-height-heading: 1.2;  /* títulos, mais compactos */
+  --line-height-base: 1.5;
+  --line-height-heading: 1.2;
 
-  /* ---- Espaçamento modular (base 8px) ---- */
-  --space-1: 0.25rem;  /* 4px  */
-  --space-2: 0.5rem;   /* 8px  */
-  --space-3: 1rem;     /* 16px */
-  --space-4: 1.5rem;   /* 24px */
-  --space-5: 2rem;     /* 32px */
-  --space-6: 3rem;     /* 48px */
-  --space-7: 4rem;      /* 64px */
+  /* ---- Espaçamento modular ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
 
-  /* ---- Layout — container e grid de 12 colunas ---- */
+  /* ---- Layout ---- */
   --container-max-width: 1140px;
   --container-padding: var(--space-3);
   --grid-columns: 12;
   --grid-gap: var(--space-4);
 }
 
+
 /* ==========================================================================
-   Base — aplica as variáveis do design system ao corpo do documento.
-   (Estilização detalhada de cartões e formulários fica para as próximas
-   etapas; aqui só o necessário para o sistema de tipografia/cor funcionar.)
+   Base
    ========================================================================== */
+
 * {
   box-sizing: border-box;
 }
@@ -79,24 +76,34 @@ body {
   background-color: var(--color-white);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   line-height: var(--line-height-heading);
   color: var(--color-primary);
 }
 
-h1 { font-size: var(--font-size-xl); }
-h2 { font-size: var(--font-size-lg); }
-h3 { font-size: var(--font-size-md); }
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+}
+
+h3 {
+  font-size: var(--font-size-md);
+}
 
 a {
   color: var(--color-primary);
 }
 
+
 /* ==========================================================================
-   Botões — estados interativos (hover, focus, active, disabled)
-   Todas as mudanças de aparência passam por uma transition única, para que
-   nenhum estado troque de cor de forma abrupta.
+   Botões
    ========================================================================== */
+
 .botao-cta {
   display: inline-block;
   background-color: var(--color-accent);
@@ -110,32 +117,29 @@ a {
   cursor: pointer;
   font-size: var(--font-size-base);
   font-family: inherit;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease, opacity 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease,
+    opacity 0.2s ease;
 }
 
-/* Hover: o mouse indica que o botão é clicável, com um tom mais escuro
-   do laranja de destaque. */
 .botao-cta:hover {
   background-color: var(--color-accent-dark);
+  color: var(--color-white);
 }
 
-/* Focus (navegação por teclado, Tab): anel de foco visível e de alto
-   contraste, independente do mouse. Usa :focus-visible para não aparecer
-   em cliques de mouse, só quando o usuário navega via teclado. */
 .botao-cta:focus-visible {
   outline: 3px solid var(--color-secondary-dark);
   outline-offset: 2px;
 }
 
-/* Active: o clique em si. O botão "afunda" 1px e escurece mais um pouco,
-   simulando pressionar um botão físico. */
 .botao-cta:active {
   background-color: var(--color-accent-dark);
+  color: var(--color-white);
   transform: translateY(1px);
 }
 
-/* Disabled: perde a cor de destaque, o cursor avisa que não é clicável,
-   e nenhuma transição de hover/active é aplicada. */
 .botao-cta:disabled {
   background-color: var(--color-gray-300);
   color: var(--color-gray-700);
@@ -143,6 +147,11 @@ a {
   transform: none;
   opacity: 0.7;
 }
+
+
+/* ==========================================================================
+   Cabeçalho e navegação
+   ========================================================================== */
 
 header {
   background-color: var(--color-primary);
@@ -164,14 +173,6 @@ header.container {
   position: relative;
 }
 
-/* ---- Menu mobile (hambúrguer) ----
-   Por padrão (mobile), a lista do menu principal fica com max-height: 0
-   e overflow: hidden, ou seja, existe no DOM mas ocupa altura zero e não
-   é visível. A classe .menu-aberto (adicionada via JS ao clicar no botão)
-   aumenta o max-height, criando a transição de abertura/fechamento. */
-
-/* Indica visualmente qual rota da SPA está ativa (classe alternada pelo
-   router.js a cada renderização, via atributo data-rota). */
 header nav a.link-ativo,
 footer nav a.link-ativo {
   text-decoration: underline;
@@ -195,8 +196,11 @@ header nav ul#menu-principal.menu-aberto {
   max-height: 400px;
 }
 
-/* Botão hambúrguer: só existe visualmente em telas estreitas (ver
-   media query de 768px, que o esconde no desktop). */
+
+/* ==========================================================================
+   Botão menu mobile
+   ========================================================================== */
+
 .menu-toggle {
   display: inline-flex;
   align-items: center;
@@ -239,7 +243,6 @@ header nav ul#menu-principal.menu-aberto {
   top: 8px;
 }
 
-/* Estado aberto: o traço do meio some e os outros dois formam um "X". */
 .menu-toggle.is-active .hamburger-icon {
   background-color: transparent;
 }
@@ -252,13 +255,11 @@ header nav ul#menu-principal.menu-aberto {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-/* ---- Submenu (dropdown) ----
-   Mobile first: aqui o submenu aparece sempre como uma lista indentada
-   normal (display: block), porque todo o menu já está escondido atrás do
-   hambúrguer, então não faz sentido exigir um segundo toque para revelá-lo.
-   A partir de 768px este comportamento é substituído: o submenu passa a
-   ficar oculto (display: none) e só aparece via :hover/:focus-within
-   (ver media query de 768px), com posicionamento absoluto tipo dropdown. */
+
+/* ==========================================================================
+   Dropdown
+   ========================================================================== */
+
 .dropdown {
   list-style: none;
   margin: var(--space-1) 0 0 var(--space-3);
@@ -270,6 +271,11 @@ header nav ul#menu-principal.menu-aberto {
   content: " ▾";
   font-size: 0.75em;
 }
+
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
 
 footer {
   background-color: var(--color-primary);
@@ -298,8 +304,11 @@ footer nav ul {
   padding: 0;
 }
 
-/* Seção hero: imagem, título, texto e botão empilhados em coluna,
-   com espaçamento consistente via gap em vez de margens soltas. */
+
+/* ==========================================================================
+   Hero e conteúdo
+   ========================================================================== */
+
 #hero.container {
   display: flex;
   flex-direction: column;
@@ -307,14 +316,24 @@ footer nav ul {
   gap: var(--space-3);
 }
 
-/* Bloco de endereço/contato: linhas empilhadas com espaçamento uniforme. */
+#hero img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
 address {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
 }
 
-/* Campo de formulário: label alinhado acima do input, com respiro fixo. */
+
+/* ==========================================================================
+   Formulários
+   ========================================================================== */
+
 .campo {
   display: flex;
   flex-direction: column;
@@ -322,8 +341,6 @@ address {
   margin-bottom: var(--space-3);
 }
 
-/* Radio e checkbox: input e label alinhados lado a lado, centralizados
-   no eixo vertical, independentemente do tamanho do texto do label. */
 .campo-radio,
 .campo-checkbox {
   display: flex;
@@ -332,16 +349,11 @@ address {
   margin-bottom: var(--space-2);
 }
 
-/* Cor nativa de marcação (radio/checkbox), para acompanhar a marca sem
-   precisar recriar os controles do zero. */
 input[type="radio"],
 input[type="checkbox"] {
   accent-color: var(--color-accent);
 }
 
-/* ==========================================================================
-   Formulário — aparência base e feedback de preenchimento
-   ========================================================================== */
 input[type="text"],
 input[type="email"],
 input[type="tel"],
@@ -356,11 +368,12 @@ textarea {
   border: 1px solid var(--color-gray-300);
   border-radius: 4px;
   padding: var(--space-2) var(--space-3);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
-/* Focus: contorno de cor consistente com o resto do site (mesmo tom do
-   hover de estados escuros), em vez do outline azul padrão do navegador. */
 input:focus,
 select:focus,
 textarea:focus {
@@ -369,13 +382,6 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(27, 58, 107, 0.15);
 }
 
-/* Feedback de validação: só é exibido depois que o campo deixa de estar
-   vazio (:not(:placeholder-shown)), para não pintar o formulário inteiro
-   de vermelho antes do usuário sequer começar a digitar. O seletor é
-   restrito aos tipos que realmente têm um atributo placeholder (texto,
-   e-mail, telefone, e a textarea); input[type="date"] e o select ficam
-   de fora de propósito, porque não têm placeholder real e ficariam
-   marcados como inválidos mesmo sem o usuário ter interagido ainda. */
 input[type="text"]:not(:placeholder-shown):invalid,
 input[type="email"]:not(:placeholder-shown):invalid,
 input[type="tel"]:not(:placeholder-shown):invalid,
@@ -392,10 +398,11 @@ textarea:not(:placeholder-shown):valid {
   background-color: var(--color-success-bg);
 }
 
+
 /* ==========================================================================
-   Container — centraliza o conteúdo e controla a largura máxima em cada
-   breakpoint. Toda seção que usa a classe .container herda esse comportamento.
+   Container
    ========================================================================== */
+
 .container {
   width: 100%;
   max-width: var(--container-max-width);
@@ -404,16 +411,15 @@ textarea:not(:placeholder-shown):valid {
   box-sizing: border-box;
 }
 
-/* Variante mais estreita, usada no formulário de cadastro para manter
-   linhas de leitura curtas e confortáveis. */
 .container--narrow {
   max-width: 720px;
 }
 
+
 /* ==========================================================================
-   Grid de 12 colunas — sistema base (mobile first)
-   Uso: <div class="grid"><div class="col-span-6">...</div></div>
+   Grid
    ========================================================================== */
+
 .grid {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
@@ -433,12 +439,11 @@ textarea:not(:placeholder-shown):valid {
 .col-span-11 { grid-column: span 11; }
 .col-span-12 { grid-column: span 12; }
 
+
 /* ==========================================================================
-   Cards Grid — aplicado nas seções que agrupam vários <article>
-   (Quem Ajudamos, O Que Ensinamos, Como Funciona, Faça Parte, Iniciativas).
-   Mobile first: 1 card por linha (span 12); os breakpoints abaixo
-   redistribuem os cards em 2 e depois 3 colunas dentro da grade de 12.
+   Cards
    ========================================================================== */
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
@@ -447,48 +452,38 @@ textarea:not(:placeholder-shown):valid {
 }
 
 .cards-grid > article {
-  grid-column: span 12; /* base mobile: 1 coluna */
+  grid-column: span 12;
 
-  /* Flexbox cuida do alinhamento interno de cada card: título, texto e
-     eventual link ficam em coluna, com espaçamento consistente entre eles. */
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 
-  /* Aparência de cartão: fundo, borda e sombra sutil, para o card se
-     destacar do restante da página mesmo antes de qualquer interação. */
   background-color: var(--color-white);
   border: 1px solid var(--color-gray-300);
   border-radius: 8px;
   padding: var(--space-4);
   box-shadow: 0 1px 2px rgba(11, 30, 63, 0.06);
-  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
-/* Hover: o card "sobe" levemente e ganha uma sombra mais forte, sinalizando
-   que aquele bloco tem uma ação associada (link, CTA de doação/cadastro). */
 .cards-grid > article:hover {
   box-shadow: 0 10px 24px rgba(11, 30, 63, 0.12);
   transform: translateY(-4px);
   border-color: var(--color-secondary);
 }
 
-/* O parágrafo cresce para ocupar o espaço restante, empurrando qualquer
-   link/ação final para a base do card, mesmo quando o texto dos cards
-   vizinhos tem tamanhos diferentes. */
 .cards-grid > article p {
   flex-grow: 1;
 }
 
+
 /* ==========================================================================
-   Componentes de feedback — badges, alertas e toast
-   Biblioteca de estilos pensada para ser reaproveitada por quem for
-   integrar o back-end depois: cada componente é independente do
-   conteúdo (recebe só texto/classe modificadora), então dá para gerar
-   badges, alertas e toasts dinamicamente sem tocar no CSS.
+   Badges
    ========================================================================== */
 
-/* ---- Badge — etiqueta pequena para categorização semântica ---- */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -500,8 +495,6 @@ textarea:not(:placeholder-shown):valid {
   white-space: nowrap;
 }
 
-/* Dentro de um card (flex-direction: column), evita que o badge estique
-   para a largura inteira por causa do align-items: stretch padrão. */
 .cards-grid > article > .badge,
 .cards-grid > article > .badge-group {
   align-self: flex-start;
@@ -539,7 +532,11 @@ textarea:not(:placeholder-shown):valid {
   border: 1px solid var(--color-gray-300);
 }
 
-/* ---- Alerta — bloco de aviso persistente (info, sucesso, erro) ---- */
+
+/* ==========================================================================
+   Alertas
+   ========================================================================== */
+
 .alert {
   display: flex;
   align-items: flex-start;
@@ -574,7 +571,11 @@ textarea:not(:placeholder-shown):valid {
   color: var(--color-error);
 }
 
-/* ---- Toast — notificação não obstrutiva, fixa no canto da tela ---- */
+
+/* ==========================================================================
+   Toast
+   ========================================================================== */
+
 .toast {
   position: fixed;
   right: var(--space-4);
@@ -607,27 +608,22 @@ textarea:not(:placeholder-shown):valid {
   font-weight: 700;
 }
 
+
 /* ==========================================================================
-   Breakpoints responsivos (mobile first, 5 cenários via min-width)
-   480  — phones grandes
-   768  — tablets
-   1024 — laptops / desktops pequenos
-   1280 — desktops padrão
-   1536 — desktops panorâmicos (widescreen)
+   Breakpoints responsivos
    ========================================================================== */
 
-/* 1. Phones grandes (>= 480px): mais respiro nas laterais */
 @media (min-width: 480px) {
+
   :root {
     --container-padding: var(--space-4);
   }
+
 }
 
-/* 2. Tablets (>= 768px): navegação vira linha horizontal, cards em 2 colunas */
+
 @media (min-width: 768px) {
 
-  /* O hambúrguer só existe em telas estreitas: a partir daqui ele some e
-     o menu principal volta a ficar sempre visível, em linha. */
   .menu-toggle {
     display: none;
   }
@@ -641,9 +637,6 @@ textarea:not(:placeholder-shown):valid {
     overflow: visible;
   }
 
-  /* Dropdown: escondido por padrão em resolução de desktop, e revelado
-     via :hover (mouse) ou :focus-within (navegação por teclado/Tab),
-     sem depender de JavaScript. */
   .has-dropdown {
     position: relative;
   }
@@ -675,23 +668,27 @@ textarea:not(:placeholder-shown):valid {
   }
 
   .cards-grid > article {
-    grid-column: span 6; /* 2 cards por linha */
+    grid-column: span 6;
   }
+
 }
 
-/* 3. Laptops / desktops pequenos (>= 1024px): cards em 3 colunas */
+
 @media (min-width: 1024px) {
+
   :root {
     --container-max-width: 1140px;
   }
 
   .cards-grid > article {
-    grid-column: span 4; /* 3 cards por linha */
+    grid-column: span 4;
   }
+
 }
 
-/* 4. Desktops padrão (>= 1280px): container mais largo, mais espaçamento */
+
 @media (min-width: 1280px) {
+
   :root {
     --container-max-width: 1200px;
   }
@@ -699,11 +696,12 @@ textarea:not(:placeholder-shown):valid {
   .cards-grid {
     gap: var(--space-5);
   }
+
 }
 
-/* 5. Desktops panorâmicos / widescreen (>= 1536px): limite máximo de largura
-      para o conteúdo não esticar demais em telas muito grandes */
+
 @media (min-width: 1536px) {
+
   :root {
     --container-max-width: 1400px;
   }
@@ -711,4 +709,100 @@ textarea:not(:placeholder-shown):valid {
   .cards-grid {
     gap: var(--space-6);
   }
+
+}
+
+
+/* ==========================================================================
+   Acessibilidade — WCAG 2.1 AA
+   ========================================================================== */
+
+/* Link para pular diretamente ao conteúdo principal.
+   Fica escondido até receber foco pelo teclado. */
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 9999;
+
+  padding: var(--space-2) var(--space-3);
+
+  background-color: var(--color-primary);
+  color: var(--color-white);
+
+  font-weight: 700;
+  text-decoration: none;
+
+  border-radius: 4px;
+
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+
+/* Foco perceptível para links e botões durante navegação por teclado. */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+
+/* Em áreas de fundo escuro utiliza cor clara para garantir contraste. */
+header a:focus-visible,
+header button:focus-visible,
+footer a:focus-visible {
+  outline-color: var(--color-secondary);
+}
+
+
+/* Foco dos campos do formulário. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 2px;
+}
+
+
+/* O foco programático é utilizado para anunciar mudanças de rota
+   em leitores de tela sem apresentar bordas extras nos títulos. */
+#app:focus,
+#app h1[tabindex="-1"]:focus,
+#app section[tabindex="-1"]:focus {
+  outline: none;
+}
+
+
+/* Em telas móveis o menu fechado deixa de participar da navegação
+   via teclado enquanto seus links não estão visíveis. */
+@media (max-width: 767px) {
+
+  header nav ul#menu-principal {
+    visibility: hidden;
+  }
+
+  header nav ul#menu-principal.menu-aberto {
+    visibility: visible;
+  }
+
+}
+
+
+/* Respeita a configuração do sistema para redução de movimentos,
+   importante para usuários sensíveis a animações. */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
 }
