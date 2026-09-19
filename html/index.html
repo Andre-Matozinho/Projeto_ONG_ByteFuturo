@@ -3,36 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ByteFuturo — Democratizando o Acesso à Tecnologia</title>
-
-    <meta
-        name="description"
-        content="ONG que leva educação em tecnologia, programação, IA, inglês e educação financeira para jovens de baixa renda e idosos em inclusão digital.">
-
+    <meta name="description" content="ONG que leva educação em tecnologia, programação, IA, inglês e educação financeira para jovens de baixa renda e idosos em inclusão digital.">
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
-
-    <!-- Atalho para usuários que navegam por teclado -->
-    <a class="skip-link" href="#app">
-        Ir para o conteúdo principal
-    </a>
-
-
-    <!-- ================================================================
-         Cabeçalho
-         ================================================================ -->
+    <a class="skip-link" href="#app">Ir para o conteúdo principal</a>
 
     <header class="container">
+        <a href="#/" class="logo">ByteFuturo</a>
 
-        <a href="#/" class="logo">
-            ByteFuturo
-        </a>
-
-
-        <!-- Botão do menu mobile -->
         <button
             type="button"
             class="menu-toggle"
@@ -40,183 +20,52 @@
             aria-expanded="false"
             aria-controls="menu-principal"
             aria-label="Abrir menu de navegação">
-
-            <span
-                class="hamburger-icon"
-                aria-hidden="true">
-            </span>
-
+            <span class="hamburger-icon" aria-hidden="true"></span>
         </button>
 
-
-        <!-- Botão de acessibilidade: alto contraste -->
         <button
             type="button"
             class="contraste-toggle"
             id="contraste-toggle"
             aria-pressed="false"
             aria-label="Ativar modo de alto contraste">
-
             Alto contraste
-
         </button>
 
-
-        <!-- Navegação principal -->
         <nav aria-label="Navegação principal">
-
             <ul id="menu-principal">
-
-                <li>
-                    <a
-                        href="#/"
-                        data-rota="">
-                        Início
-                    </a>
-                </li>
-
-
+                <li><a href="#/" data-rota="">Início</a></li>
                 <li class="has-dropdown">
-
-                    <a
-                        href="#/projetos"
-                        data-rota="projetos">
-                        Projetos
-                    </a>
-
+                    <a href="#/projetos" data-rota="projetos">Projetos</a>
                     <ul class="dropdown">
-
-                        <li>
-                            <a href="#/projetos/iniciativas">
-                                Iniciativas
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#/projetos/doacao">
-                                Como Doar
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#/projetos/voluntariado">
-                                Seja Voluntário
-                            </a>
-                        </li>
-
+                        <li><a href="#/projetos/iniciativas">Iniciativas</a></li>
+                        <li><a href="#/projetos/doacao">Como Doar</a></li>
+                        <li><a href="#/projetos/voluntariado">Seja Voluntário</a></li>
                     </ul>
-
                 </li>
-
-
-                <li>
-                    <a
-                        href="#/cadastro"
-                        data-rota="cadastro">
-                        Cadastre-se
-                    </a>
-                </li>
-
+                <li><a href="#/cadastro" data-rota="cadastro">Cadastre-se</a></li>
             </ul>
-
         </nav>
-
     </header>
 
+    <main id="app" tabindex="-1"></main>
 
-    <!-- ================================================================
-         Conteúdo principal da SPA
-         ================================================================ -->
-
-    <!--
-        O conteúdo de cada rota é carregado dinamicamente
-        pelo arquivo js/router.js.
-    -->
-
-    <main
-        id="app"
-        tabindex="-1">
-    </main>
-
-
-    <!-- ================================================================
-         Mensagem de feedback
-         ================================================================ -->
-
-    <div
-        class="toast"
-        id="toast"
-        role="status"
-        aria-live="polite">
-
-        <span
-            class="toast__icon"
-            aria-hidden="true">
-            &check;
-        </span>
-
-        <span>
-            Cadastro enviado com sucesso! Em breve entraremos em contato.
-        </span>
-
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <span class="toast__icon" aria-hidden="true">&check;</span>
+        <span>Cadastro enviado com sucesso! Em breve entraremos em contato.</span>
     </div>
 
-
-    <!-- ================================================================
-         Rodapé
-         ================================================================ -->
-
     <footer class="container">
-
-        <p>
-            &copy; 2026 ByteFuturo — Democratizando o Acesso à Tecnologia.
-        </p>
-
-
+        <p>&copy; 2026 ByteFuturo — Democratizando o Acesso à Tecnologia.</p>
         <nav aria-label="Navegação do rodapé">
-
             <ul>
-
-                <li>
-                    <a
-                        href="#/"
-                        data-rota="">
-                        Início
-                    </a>
-                </li>
-
-                <li>
-                    <a
-                        href="#/projetos"
-                        data-rota="projetos">
-                        Projetos
-                    </a>
-                </li>
-
-                <li>
-                    <a
-                        href="#/cadastro"
-                        data-rota="cadastro">
-                        Cadastre-se
-                    </a>
-                </li>
-
+                <li><a href="#/" data-rota="">Início</a></li>
+                <li><a href="#/projetos" data-rota="projetos">Projetos</a></li>
+                <li><a href="#/cadastro" data-rota="cadastro">Cadastre-se</a></li>
             </ul>
-
         </nav>
-
     </footer>
 
-
-    <!-- ================================================================
-         Scripts
-         ================================================================ -->
-
-    <script src="../js/router.js"></script>
-    <script src="../js/menu.js"></script>
-    <script src="../js/mascaras.js"></script>
-    <script src="../js/feedback.js"></script>
-    <script src="../js/tema.js"></script>
-
+    <script type="module" src="../js/main.js"></script>
 </body>
 </html>

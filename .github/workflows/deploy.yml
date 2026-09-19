@@ -1,0 +1,73 @@
+name: CI/CD ByteFuturo
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/producao
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Medir arquivos fonte
+        run: |
+          echo "CSS fonte: $(find css -type f -name '*.css' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
+          echo "JS fonte: $(find js -type f -name '*.js' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
+
+      - name: Gerar build de produção
+        run: npm run build
+
+      - name: Exibir tamanho da build
+        run: |
+          echo "Arquivos gerados em dist:"
+          find dist -type f -printf '%p %s bytes\n' | sort
+          echo "Tamanho total:"
+          du -sh dist
+
+      - name: Publicar artefato do GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
