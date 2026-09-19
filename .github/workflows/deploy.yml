@@ -41,6 +41,8 @@ jobs:
         run: |
           echo "CSS fonte: $(find css -type f -name '*.css' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
           echo "JS fonte: $(find js -type f -name '*.js' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
+          echo "HTML fonte: $(find . -path './node_modules' -prune -o -type f -name '*.html' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
+          echo "Imagens fonte: $(find imagens -type f -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
 
       - name: Gerar build de produção
         run: npm run build
@@ -49,6 +51,10 @@ jobs:
         run: |
           echo "Arquivos gerados em dist:"
           find dist -type f -printf '%p %s bytes\n' | sort
+          echo "CSS build: $(find dist/assets -type f -name '*.css' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
+          echo "JS build: $(find dist/assets -type f -name '*.js' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
+          echo "HTML build: $(find dist -type f -name '*.html' -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
+          echo "Imagens build: $(find dist/imagens -type f -printf '%s\n' | awk '{s+=$1} END {print s+0}') bytes"
           echo "Tamanho total:"
           du -sh dist
 

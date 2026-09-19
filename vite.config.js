@@ -1,21 +1,49 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
-import { cpSync, mkdirSync } from 'node:fs';
+import {
+  copyFileSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync
+} from 'node:fs';
 
-function copiarRecursosEstaticos() {
+const templates = ['inicio.html', 'projetos.html', 'cadastro.html'];
+
+function minificarHtml(html) {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/>\s+</g, '><')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+function prepararRecursosEstaticos() {
   return {
-    name: 'copiar-recursos-estaticos',
+    name: 'preparar-recursos-estaticos',
     closeBundle() {
-      const templatesOrigem = resolve(import.meta.dirname, 'html/templates');
-      const templatesDestino = resolve(import.meta.dirname, 'dist/html/templates');
-      const imagensOrigem = resolve(import.meta.dirname, 'imagens');
-      const imagensDestino = resolve(import.meta.dirname, 'dist/imagens');
+      const raiz = import.meta.dirname;
+      const templatesDestino = resolve(raiz, 'dist/html/templates');
+      const imagensDestino = resolve(raiz, 'dist/imagens');
 
       mkdirSync(templatesDestino, { recursive: true });
-      cpSync(templatesOrigem, templatesDestino, { recursive: true });
-
       mkdirSync(imagensDestino, { recursive: true });
-      cpSync(imagensOrigem, imagensDestino, { recursive: true });
+
+      for (const arquivo of templates) {
+        const origem = resolve(raiz, 'html/templates', arquivo);
+        const destino = resolve(templatesDestino, arquivo);
+        const conteudo = readFileSync(origem, 'utf-8');
+        writeFileSync(destino, minificarHtml(conteudo), 'utf-8');
+      }
+
+      copyFileSync(
+        resolve(raiz, 'imagens/banner-bytefuturo.webp'),
+        resolve(imagensDestino, 'banner-bytefuturo.webp')
+      );
+
+      copyFileSync(
+        resolve(raiz, 'imagens/banner-bytefuturo.jpg'),
+        resolve(imagensDestino, 'banner-bytefuturo.jpg')
+      );
     }
   };
 }
@@ -23,7 +51,7 @@ function copiarRecursosEstaticos() {
 export default defineConfig({
   base: './',
 
-  plugins: [copiarRecursosEstaticos()],
+  plugins: [prepararRecursosEstaticos()],
 
   build: {
     outDir: 'dist',

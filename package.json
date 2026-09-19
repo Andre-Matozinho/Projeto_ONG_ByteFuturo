@@ -2,6 +2,7 @@
   "name": "bytefuturo",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Aplicação front-end da ONG fictícia ByteFuturo.",
   "scripts": {
     "dev": "vite",
@@ -9,6 +10,6 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^8.3.0"
+    "vite": "8.3.0"
   }
 }
