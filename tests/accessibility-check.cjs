@@ -112,8 +112,13 @@ async function testarTecladoESemantica() {
     }
 
     for (const rota of ROTAS) {
+      await page.goto('about:blank');
       await page.goto(`${BASE_URL}${rota}`, { waitUntil: 'networkidle2' });
       await page.waitForSelector('#app h1', { timeout: 10000 });
+      await page.waitForFunction(
+        () => document.activeElement === document.querySelector('#app h1'),
+        { timeout: 5000 }
+      );
 
       const focoRota = await page.evaluate(() => ({
         tag: document.activeElement?.tagName,
