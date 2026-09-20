@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 
 const BASE_URL = 'https://andre-matozinho.github.io/Projeto_ONG_ByteFuturo/html/index.html';
 const ROTAS = ['#/', '#/projetos', '#/cadastro'];
+const CHROME_ARGS = ['--no-sandbox', '--disable-setuid-sandbox'];
 
 async function auditarWCAG() {
   let totalErros = 0;
@@ -15,7 +16,10 @@ async function auditarWCAG() {
       wait: 1500,
       timeout: 60000,
       includeWarnings: false,
-      includeNotices: false
+      includeNotices: false,
+      chromeLaunchConfig: {
+        args: CHROME_ARGS
+      }
     });
 
     const erros = resultado.issues.filter((item) => item.type === 'error');
@@ -34,7 +38,10 @@ async function auditarWCAG() {
 }
 
 async function testarTecladoESemantica() {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: CHROME_ARGS
+  });
   const page = await browser.newPage();
 
   try {
