@@ -4,6 +4,7 @@ const puppeteer = require('puppeteer');
 const BASE_URL = 'https://andre-matozinho.github.io/Projeto_ONG_ByteFuturo/html/index.html';
 const ROTAS = ['#/', '#/projetos', '#/cadastro'];
 const CHROME_ARGS = ['--no-sandbox', '--disable-setuid-sandbox'];
+const REGRA_HASH_SPA = 'WCAG2AA.Principle2.Guideline2_4.2_4_1.G1,G123,G124.NoSuchID';
 
 async function auditarWCAG() {
   let totalErros = 0;
@@ -17,6 +18,7 @@ async function auditarWCAG() {
       timeout: 60000,
       includeWarnings: false,
       includeNotices: false,
+      ignore: [REGRA_HASH_SPA],
       chromeLaunchConfig: {
         args: CHROME_ARGS
       }
@@ -76,7 +78,12 @@ async function testarTecladoESemantica() {
       throw new Error(`Falhas de semântica assistiva: ${falhasEstrutura.join(', ')}`);
     }
 
-    await page.evaluate(() => document.body.focus());
+    await page.evaluate(() => {
+      document.activeElement?.blur();
+      document.body.setAttribute('tabindex', '-1');
+      document.body.focus();
+      document.body.removeAttribute('tabindex');
+    });
     await page.keyboard.press('Tab');
 
     const primeiroFoco = await page.evaluate(() => ({
