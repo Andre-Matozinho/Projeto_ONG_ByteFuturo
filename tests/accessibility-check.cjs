@@ -39,6 +39,27 @@ async function auditarWCAG() {
   }
 }
 
+async function verificarArvoreAcessibilidade(page, rota, tituloEsperado) {
+  const client = await page.createCDPSession();
+  await client.send('Accessibility.enable');
+  const { nodes } = await client.send('Accessibility.getFullAXTree');
+
+  const possuiMain = nodes.some((node) => node.role?.value === 'main');
+  const possuiNavegacao = nodes.some((node) => node.role?.value === 'navigation');
+  const possuiTitulo = nodes.some(
+    (node) => node.role?.value === 'heading' && node.name?.value === tituloEsperado
+  );
+
+  if (!possuiMain || !possuiNavegacao || !possuiTitulo) {
+    throw new Error(
+      `Árvore de acessibilidade incompleta em ${rota}: main=${possuiMain}, navigation=${possuiNavegacao}, heading=${possuiTitulo}`
+    );
+  }
+
+  console.log(`[Leitor de tela/AX Tree] ${rota}: main, navigation e H1 expostos corretamente.`);
+  await client.detach();
+}
+
 async function testarTecladoESemantica() {
   const browser = await puppeteer.launch({
     headless: true,
@@ -132,6 +153,7 @@ async function testarTecladoESemantica() {
       }
 
       console.log(`[Teclado] ${rota}: foco movido corretamente para "${focoRota.h1}".`);
+      await verificarArvoreAcessibilidade(page, rota, focoRota.h1);
     }
 
     console.log('\n[Teclado] Skip link é o primeiro elemento focável e há navegação por Tab entre controles.');
