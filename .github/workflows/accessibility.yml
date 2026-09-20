@@ -1,0 +1,33 @@
+name: Auditoria de acessibilidade
+
+on:
+  push:
+    branches:
+      - feature/testes-acessibilidade
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  accessibility:
+    name: WCAG 2.1 AA e teclado
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Instalar dependências do projeto
+        run: npm install
+
+      - name: Instalar ferramentas de acessibilidade
+        run: npm install --no-save pa11y puppeteer
+
+      - name: Executar auditoria automatizada
+        run: node tests/accessibility-check.cjs
